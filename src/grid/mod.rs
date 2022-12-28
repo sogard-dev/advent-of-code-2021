@@ -2,6 +2,45 @@ use std::collections::{HashMap, HashSet, VecDeque};
 
 pub type Coordinate = (isize, isize);
 
+#[derive(Debug, PartialEq, Clone, Eq)]
+pub struct Segment {
+    pub from: Coordinate,
+    pub to: Coordinate,
+}
+
+impl Segment {
+    pub fn iter(&self) -> SegmentIter<'_> {
+        SegmentIter { segment: self, i: 0 }
+    }
+}
+
+pub struct SegmentIter<'a> {
+    segment: &'a Segment,
+    i: isize,
+}
+
+impl<'a> Iterator for SegmentIter<'a> {
+    type Item = Coordinate;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.i == -1 {
+            return None;
+        }
+
+        let x_diff = (self.segment.to.0 - self.segment.from.0).signum();
+        let y_diff = (self.segment.to.1 - self.segment.from.1).signum();
+
+        let new_coord = (self.segment.from.0 + x_diff * self.i, self.segment.from.1 + y_diff * self.i);
+
+        if new_coord.eq(&self.segment.to) {
+            self.i = -1;
+        } else {
+            self.i += 1;
+        }
+        Some(new_coord)
+    }
+}
+
 #[derive(Debug, PartialEq, Clone)]
 pub struct Grid<Model> {
     pub width: isize,
