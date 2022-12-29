@@ -1,4 +1,4 @@
-Finished: **0/25**
+Finished: **11/25**
 
 These are my Rust solutions for Advent Of Code 2021.
 
