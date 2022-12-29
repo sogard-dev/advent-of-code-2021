@@ -13,6 +13,8 @@ fn puzzle_2(input: Input) -> usize {
     0
 }
 
+//#[derive(Debug, PartialEq, Clone, Eq, Hash)]
+
 #[cfg(test)]
 mod tests {
     use super::*;
