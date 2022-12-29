@@ -176,39 +176,6 @@ impl<T> Grid<T> {
         }
     }
 
-    pub fn can_visit(&self, from: &(isize, isize)) -> usize {
-        let init = *from;
-
-        let mut to_visit = VecDeque::new();
-        let mut added_to_visit = HashSet::new();
-
-        to_visit.push_back(init);
-        added_to_visit.insert(init);
-
-        while !to_visit.is_empty() {
-
-            let mut seen = vec![];
-
-            while let Some(pos_to_check) = to_visit.pop_front() {
-                if let Some(connections) = self.connections.get(&pos_to_check) {
-                    for neighbour_pos in connections {
-                        seen.push(*neighbour_pos);
-                    }
-                }
-        
-            }
-
-            for pos in seen {
-                if !added_to_visit.contains(&pos) {
-                    added_to_visit.insert(pos);
-                    to_visit.push_back(pos);
-                }
-            }
-        }
-        
-        added_to_visit.len()
-    }
-
     pub fn print(&self, f: impl Fn(Coordinate, &T) -> String) {
         for row_index in 0..self.height {
             for column_index in 0..self.width {

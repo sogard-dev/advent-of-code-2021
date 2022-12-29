@@ -50,9 +50,12 @@ fn puzzle_2(mut input: Input) -> usize {
     input.add_connections(connections);
 
     let mut biggest = vec![];
+
     for pos in lowest {
-        let size = input.can_visit(&pos);
-        println!("Basin: {:?}  size: {}", pos, size);
+        let mut size = 0;
+        input.bfs(&pos, |_,_| {
+            size += 1;
+        });
         biggest.push(size);
     }
     biggest.sort();
