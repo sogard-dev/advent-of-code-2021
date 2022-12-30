@@ -327,3 +327,7 @@ pub fn is_up(a: &Coordinate, b: &Coordinate) -> bool {
 pub fn is_down(a: &Coordinate, b: &Coordinate) -> bool {
     a.0 == b.0 && a.1 > b.1
 }
+
+pub fn manhatten_distance(a: &Coordinate, b: &Coordinate) -> usize {
+    ((a.0 - b.0).abs() + (a.1 - b.1).abs()) as usize
+}
