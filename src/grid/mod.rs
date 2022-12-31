@@ -176,6 +176,39 @@ impl<T> Grid<T> {
         }
     }
 
+    pub fn bfs_with_cost(&self, from: &Coordinate, mut f: impl FnMut(&Coordinate, isize), mut cost_func: impl FnMut(&Coordinate, &T) -> isize) {
+        let init = *from;
+
+        let mut to_visit = HashMap::new();
+        let mut visited = HashSet::new();
+
+        to_visit.insert(init, 0 as isize);
+
+        while !to_visit.is_empty() {
+            let smallest = to_visit.iter().min_by_key(|(k,v)| *v).unwrap();
+            let pos = *smallest.0;
+            let cost = *smallest.1;
+            to_visit.remove(&pos);
+            visited.insert(pos);
+
+            f(&pos, cost);
+
+            for neighbour_pos in self.connections.get(&pos).unwrap() {
+                if !visited.contains(&neighbour_pos) {
+                    let new_cost = cost + cost_func(neighbour_pos, self.get_model(neighbour_pos).unwrap());
+
+                    if let Some(prev) = to_visit.get(neighbour_pos) {
+                        if new_cost < *prev {
+                            to_visit.insert(*neighbour_pos, new_cost);
+                        }
+                    } else {
+                        to_visit.insert(*neighbour_pos, new_cost);
+                    }
+                }
+            }
+        }
+    }
+
     pub fn print(&self, f: impl Fn(Coordinate, &T) -> String) {
         for row_index in 0..self.height {
             for column_index in 0..self.width {
