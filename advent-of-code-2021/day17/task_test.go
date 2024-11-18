@@ -8,11 +8,11 @@ import (
 )
 
 func TestPart1(t *testing.T) {
-	require.Equal(t, 0, part1(``))
-	require.Equal(t, 0, part1(utils.GetInput(t, "input.txt")))
+	require.Equal(t, 45, part1(`target area: x=20..30, y=-10..-5`))
+	require.Equal(t, 8911, part1(utils.GetInput(t, "input.txt")))
 }
 
 func TestPart2(t *testing.T) {
-	require.Equal(t, 0, part2(``))
-	require.Equal(t, 0, part2(utils.GetInput(t, "input.txt")))
+	require.Equal(t, 112, part2(`target area: x=20..30, y=-10..-5`))
+	require.Equal(t, 4748, part2(utils.GetInput(t, "input.txt")))
 }
